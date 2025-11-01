@@ -28,7 +28,6 @@ import utilidad.Utilidades;
 public class FXMLAdminProfesorController implements Initializable, IObservador {
     @FXML
     private TableView <Profesor> tvProfesores;
-    
     @FXML
     private TableColumn colNumPersonal;
     @FXML
@@ -81,6 +80,12 @@ public class FXMLAdminProfesorController implements Initializable, IObservador {
 
     @FXML
     private void clicBtnModificar(ActionEvent event) {
+        Profesor profesorSeleccionado = tvProfesores.getSelectionModel().getSelectedItem();
+        if(profesorSeleccionado != null) {
+            irFormulario(profesorSeleccionado);
+        } else {
+            Utilidades.mostrarAlertaSimple("Selecciona un profesor", "Primero debes seleccionar un profesor de la lista.", Alert.AlertType.WARNING);
+        }
     }
 
     @FXML

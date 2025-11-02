@@ -39,6 +39,7 @@ public class FXMLInicioSesionController implements Initializable {
     private void clicIngresar(ActionEvent event) {
         String noPersonal = tfNumPersonal.getText();
         String password = pfPassword.getText();
+        
         if(sonDatosValidos(noPersonal, password)) {
             validarSesion(noPersonal, password);
         }
@@ -48,14 +49,17 @@ public class FXMLInicioSesionController implements Initializable {
         boolean correcto = true;
         lbErrorNumPersonal.setText("");
         lbErrorPassword.setText("");
+        
         if(noPersonal == null || noPersonal.isEmpty()) {
             correcto = false;
             lbErrorNumPersonal.setText("Numero de personal obligatorio");
         }
+        
         if(password == null || password.isEmpty()) {
             correcto = false;
             lbErrorPassword.setText("Contraseña obligatoria");
         }
+        
         return correcto;
     }
     
@@ -80,8 +84,6 @@ public class FXMLInicioSesionController implements Initializable {
             Parent vista = cargador.load();
             FXMLPrincipalController controlador = cargador.getController();
             controlador.obtenerSesion(profesorSesion);
-            
-            //Creamos escena y reutilizamos escenario
             Scene escena = new Scene(vista);
             Stage escenario = (Stage) tfNumPersonal.getScene().getWindow();
             escenario.setScene(escena);

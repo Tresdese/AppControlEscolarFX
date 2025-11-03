@@ -5,27 +5,14 @@ public class Profesor {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private String noPersonal;
-    private String password;
+    private String numeroPersonal;
+    private String contrasenia;
     private String fechaNacimiento;
     private String fechaContratacion;
     private int idRol;
     private String rol;
 
     public Profesor() {
-    }
-
-    public Profesor(int idProfesor, String nombre, String apellidoPaterno, String apellidoMaterno, String noPersonal, String password, String fechaNacimiento, String fechaContratacion, int idRol, String rol) {
-        this.idProfesor = idProfesor;
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.noPersonal = noPersonal;
-        this.password = password;
-        this.fechaNacimiento = fechaNacimiento;
-        this.fechaContratacion = fechaContratacion;
-        this.idRol = idRol;
-        this.rol = rol;
     }
 
     public void setIdProfesor(int idProfesor) {
@@ -44,12 +31,12 @@ public class Profesor {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public void setNoPersonal(String noPersonal) {
-        this.noPersonal = noPersonal;
+    public void setNumeroPersonal(String numeroPersonal) {
+        this.numeroPersonal = numeroPersonal;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public void setFechaNacimiento(String fechaNacimiento) {
@@ -84,12 +71,12 @@ public class Profesor {
         return apellidoMaterno;
     }
 
-    public String getNoPersonal() {
-        return noPersonal;
+    public String getNumeroPersonal() {
+        return numeroPersonal;
     }
 
-    public String getPassword() {
-        return password;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
     public String getFechaNacimiento() {

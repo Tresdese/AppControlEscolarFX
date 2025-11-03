@@ -1,6 +1,6 @@
 package appcontrolescolarfx.dominio;
 
-import appcontrolescolarfx.modelo.ConexionBD;
+import appcontrolescolarfx.modelo.ConexionBaseDatos;
 import appcontrolescolarfx.modelo.dao.AutenticacionDAO;
 import appcontrolescolarfx.modelo.pojo.Profesor;
 import java.sql.ResultSet;
@@ -9,19 +9,18 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class AutenticacionImplementacion {
-    public static HashMap<String,Object> verificarSesionProfesor(String noPersonal, String password) {
+    public static HashMap<String,Object> verificarSesionProfesor(String numeroPersonal, String contrasenia) {
         HashMap<String,Object> respuesta = new LinkedHashMap<>();
         try {
-            ResultSet resultado = AutenticacionDAO.autenticarUsuario(noPersonal, password, ConexionBD.abrirConexionBD());
+            ResultSet resultado = AutenticacionDAO.autenticarUsuario(numeroPersonal, contrasenia, ConexionBaseDatos.abrirConexionBD());
             
             if(resultado.next()) {
-                //Credenciales correctas
                 Profesor profesorSesion = new Profesor();
                 profesorSesion.setIdProfesor(resultado.getInt("idProfesor"));
                 profesorSesion.setNombre(resultado.getString("nombre"));
                 profesorSesion.setApellidoPaterno(resultado.getString("apellidoPaterno"));
                 profesorSesion.setApellidoMaterno(resultado.getString("apellidoMaterno"));
-                profesorSesion.setNoPersonal(resultado.getString("noPersonal"));
+                profesorSesion.setNumeroPersonal(resultado.getString("noPersonal"));
                 profesorSesion.setIdRol(resultado.getInt("idRol"));
                 profesorSesion.setRol(resultado.getString("rol"));
                 respuesta.put("error", false);
@@ -32,7 +31,7 @@ public class AutenticacionImplementacion {
                 respuesta.put("mensaje", "Las credenciales proporcionadas son incorrectas, por favor verifica la información");
             }
             
-            ConexionBD.cerrarConexionBD();
+            ConexionBaseDatos.cerrarConexionBD();
         } catch (SQLException ex) {
             respuesta.put("error", true);
             respuesta.put("mensaje", ex.getMessage());

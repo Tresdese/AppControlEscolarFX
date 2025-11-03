@@ -10,22 +10,22 @@
    <children>
       <Pane prefHeight="58.0" prefWidth="750.0" style="-fx-background-color: GREEN;" />
       <Label layoutX="17.0" layoutY="68.0" text="Número de personal:" />
-      <TextField fx:id="tfNumPersonal" layoutX="18.0" layoutY="94.0" promptText="P001" />
+      <TextField fx:id="textFieldNumeroPersonal" layoutX="18.0" layoutY="94.0" promptText="P001" />
       <Label layoutX="18.0" layoutY="148.0" text="Nombre:" />
-      <TextField fx:id="tfNombre" layoutX="18.0" layoutY="169.0" promptText="Ana" />
+      <TextField fx:id="textFieldNombre" layoutX="18.0" layoutY="169.0" promptText="Ana" />
       <Label layoutX="230.0" layoutY="148.0" text="Apellido paterno:" />
-      <TextField fx:id="tfApellidoPaterno" layoutX="230.0" layoutY="169.0" promptText="Torres" />
+      <TextField fx:id="textFieldApellidoPaterno" layoutX="230.0" layoutY="169.0" promptText="Torres" />
       <Label layoutX="465.0" layoutY="148.0" text="Apellido materno:" />
-      <TextField fx:id="tfApellidoMaterno" layoutX="465.0" layoutY="169.0" promptText="Lagunes" />
+      <TextField fx:id="textFieldApellidoMaterno" layoutX="465.0" layoutY="169.0" promptText="Lagunes" />
       <Label layoutX="18.0" layoutY="227.0" text="Fecha de nacimiento:" />
-      <DatePicker fx:id="dpFechaNacimiento" layoutX="18.0" layoutY="248.0" prefHeight="31.0" prefWidth="187.0" promptText="dd/mm/aaaa" />
+      <DatePicker fx:id="datePickerFechaNacimiento" layoutX="18.0" layoutY="248.0" prefHeight="31.0" prefWidth="187.0" promptText="dd/mm/aaaa" />
       <Label layoutX="230.0" layoutY="227.0" text="Fecha de contratación:" />
-      <DatePicker fx:id="dpFechaContratacion" layoutX="230.0" layoutY="248.0" prefHeight="31.0" prefWidth="187.0" promptText="dd/mm/aaaa" />
+      <DatePicker fx:id="datePickerFechaContratacion" layoutX="230.0" layoutY="248.0" prefHeight="31.0" prefWidth="187.0" promptText="dd/mm/aaaa" />
       <Label layoutX="18.0" layoutY="325.0" text="Contraseña de acceso:" />
-      <TextField fx:id="tfPassword" layoutX="18.0" layoutY="346.0" promptText="********" />
+      <TextField fx:id="textFieldPassword" layoutX="18.0" layoutY="346.0" promptText="********" />
       <Label layoutX="231.0" layoutY="325.0" text="Rol en el sistema:" />
-      <ComboBox fx:id="cbRol" layoutX="230.0" layoutY="346.0" prefHeight="31.0" prefWidth="187.0" />
-      <Button layoutX="625.0" layoutY="414.0" mnemonicParsing="false" onAction="#clicBtnGuardar" prefHeight="30.0" prefWidth="100.0" text="Guardar" />
-      <Button layoutX="509.0" layoutY="414.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="30.0" prefWidth="100.0" text="Cancelar" />
+      <ComboBox fx:id="comboBoxRol" layoutX="230.0" layoutY="346.0" prefHeight="31.0" prefWidth="187.0" />
+      <Button layoutX="625.0" layoutY="414.0" mnemonicParsing="false" onAction="#clicButtonGuardar" prefHeight="30.0" prefWidth="100.0" text="Guardar" />
+      <Button layoutX="509.0" layoutY="414.0" mnemonicParsing="false" onAction="#clicButtonCancelar" prefHeight="30.0" prefWidth="100.0" text="Cancelar" />
    </children>
 </AnchorPane>

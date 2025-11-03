@@ -25,25 +25,26 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import utilidad.Utilidades;
 
-public class FXMLAdminProfesorController implements Initializable, IObservador {
+public class FXMLAdministrarProfesorController implements Initializable, IObservador {
     @FXML
-    private TableView <Profesor> tvProfesores;
+    private TableView <Profesor> tableViewProfesores;
     @FXML
-    private TableColumn colNumPersonal;
+    private TableColumn columnNumeroPersonal;
     @FXML
-    private TableColumn colApellidoPaterno;
+    private TableColumn columnApellidoPaterno;
     @FXML
-    private TableColumn colApellidoMaterno;
+    private TableColumn columnApellidoMaterno;
     @FXML
-    private TableColumn colNombre;
+    private TableColumn columnNombre;
     @FXML
-    private TableColumn colFechaContratacion;
+    private TableColumn columnFechaContratacion;
     @FXML
-    private TableColumn colRol;
-    @FXML
-    private TextField tfBuscar;
+    private TableColumn columnRol;
     
-    private ObservableList<Profesor> profesores;
+    @FXML
+    private TextField textFieldBuscar;
+    
+    private ObservableList<Profesor> observableListProfesores;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,35 +53,35 @@ public class FXMLAdminProfesorController implements Initializable, IObservador {
     }
     
     private void configurarTabla(){
-        colNumPersonal.setCellValueFactory(new PropertyValueFactory("noPersonal"));
-        colApellidoPaterno.setCellValueFactory(new PropertyValueFactory("apellidoPaterno"));
-        colApellidoMaterno.setCellValueFactory(new PropertyValueFactory("apellidoMaterno"));
-        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));        
-        colFechaContratacion.setCellValueFactory(new PropertyValueFactory("fechaContratacion"));
-        colRol.setCellValueFactory(new PropertyValueFactory("rol"));
+        columnNumeroPersonal.setCellValueFactory(new PropertyValueFactory("numeroPersonal"));
+        columnApellidoPaterno.setCellValueFactory(new PropertyValueFactory("apellidoPaterno"));
+        columnApellidoMaterno.setCellValueFactory(new PropertyValueFactory("apellidoMaterno"));
+        columnNombre.setCellValueFactory(new PropertyValueFactory("nombre"));        
+        columnFechaContratacion.setCellValueFactory(new PropertyValueFactory("fechaContratacion"));
+        columnRol.setCellValueFactory(new PropertyValueFactory("rol"));
     }
     
     private void cargarInformacion() {
         HashMap<String,Object> respuesta = ProfesorImplementacion.obtenerProfesores();
         boolean error = (boolean) respuesta.get("error");
         if(!error) {
-            ArrayList<Profesor> profesoresBD = (ArrayList<Profesor>) respuesta.get("profesores");
-            profesores = FXCollections.observableArrayList();
-            profesores.addAll(profesoresBD);
-            tvProfesores.setItems(profesores);
+            ArrayList<Profesor> profesoresBaseDatos = (ArrayList<Profesor>) respuesta.get("profesores");
+            observableListProfesores = FXCollections.observableArrayList();
+            observableListProfesores.addAll(profesoresBaseDatos);
+            tableViewProfesores.setItems(observableListProfesores);
         } else {
             Utilidades.mostrarAlertaSimple("Error", " " + respuesta.get("mensaje"), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
-    private void clicBtnRegistrar(ActionEvent event) {
+    private void clicButtonRegistrar(ActionEvent event) {
         irFormulario(null);
     }
 
     @FXML
-    private void clicBtnModificar(ActionEvent event) {
-        Profesor profesorSeleccionado = tvProfesores.getSelectionModel().getSelectedItem();
+    private void clicButtonModificar(ActionEvent event) {
+        Profesor profesorSeleccionado = tableViewProfesores.getSelectionModel().getSelectedItem();
         if(profesorSeleccionado != null) {
             irFormulario(profesorSeleccionado);
         } else {
@@ -89,7 +90,7 @@ public class FXMLAdminProfesorController implements Initializable, IObservador {
     }
 
     @FXML
-    private void clicBtnEliminar(ActionEvent event) {
+    private void clicButtonEliminar(ActionEvent event) {
     }
     
     private void irFormulario(Profesor profesor) {
@@ -98,14 +99,14 @@ public class FXMLAdminProfesorController implements Initializable, IObservador {
             Parent vista = cargador.load();
             FXMLFormularioProfesorController controlador = cargador.getController();
             controlador.inicializarDatos(this, profesor);
-            Scene scene = new Scene(vista);
-            Stage stage = new Stage();
-            stage.setTitle("Formulario profesores");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            Scene escena = new Scene(vista);
+            Stage escenario = new Stage();
+            escenario.setTitle("Formulario profesores");
+            escenario.setScene(escena);
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     

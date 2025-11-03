@@ -13,6 +13,6 @@ public class CatalogoDAO {
             return sentencia.executeQuery();
         }
         
-        throw new SQLException("Lo sentimos no hay conexión a la base de datos");
+        throw new SQLException("No hay conexión a la base de datos");
     }
 }

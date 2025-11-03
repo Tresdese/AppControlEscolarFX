@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConexionBD {
+public class ConexionBaseDatos {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static Connection CONEXION = null;
 
@@ -26,18 +26,18 @@ public class ConexionBD {
         Properties properties = cargarPropiedades();
         String URL_CONEXION = properties.getProperty("db.url") + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
         String USUARIO = properties.getProperty("db.usuario");
-        String PASSWORD = properties.getProperty("db.password");
+        String CONTRASENIA = properties.getProperty("db.password");
 
         try {
             Class.forName(DRIVER);
 
             if (CONEXION == null || CONEXION.isClosed()) {
-                CONEXION = DriverManager.getConnection(URL_CONEXION, USUARIO, PASSWORD);
+                CONEXION = DriverManager.getConnection(URL_CONEXION, USUARIO, CONTRASENIA);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return CONEXION;
@@ -48,8 +48,8 @@ public class ConexionBD {
             if (CONEXION != null && !CONEXION.isClosed()) {
                 CONEXION.close();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             CONEXION = null;
         }

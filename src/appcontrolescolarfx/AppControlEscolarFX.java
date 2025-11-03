@@ -10,10 +10,10 @@ public class AppControlEscolarFX extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("vista/FXMLInicioSesion.fxml")); 
-            Scene scene = new Scene(root);
+            Parent vistaRaiz = FXMLLoader.load(getClass().getResource("vista/FXMLInicioSesion.fxml")); 
+            Scene escena = new Scene(vistaRaiz);
             primaryStage.setTitle("Control Escolar - Inicio de Sesión");
-            primaryStage.setScene(scene);
+            primaryStage.setScene(escena);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

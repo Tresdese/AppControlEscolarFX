@@ -1,6 +1,6 @@
 package appcontrolescolarfx.dominio;
 
-import appcontrolescolarfx.modelo.ConexionBD;
+import appcontrolescolarfx.modelo.ConexionBaseDatos;
 import appcontrolescolarfx.modelo.dao.CatalogoDAO;
 import appcontrolescolarfx.modelo.pojo.Rol;
 import java.sql.ResultSet;
@@ -15,19 +15,19 @@ public class CatalogoImplementacion {
         HashMap<String,Object> respuesta = new LinkedHashMap<>();
         
         try {
-            ResultSet resultado = CatalogoDAO.obtenerRoles(ConexionBD.abrirConexionBD());
-            List<Rol> roles = new ArrayList<>();
+            ResultSet resultado = CatalogoDAO.obtenerRoles(ConexionBaseDatos.abrirConexionBD());
+            List<Rol> rolesBaseDatos = new ArrayList<>();
             
             while(resultado.next()) {
                 Rol rol = new Rol();
                 rol.setIdRol(resultado.getInt("idRol"));
                 rol.setRol(resultado.getString("rol"));
-                roles.add(rol);
+                rolesBaseDatos.add(rol);
             }
             
-            ConexionBD.cerrarConexionBD();
+            ConexionBaseDatos.cerrarConexionBD();
             respuesta.put("error", false);
-            respuesta.put("roles", roles);
+            respuesta.put("roles", rolesBaseDatos);
         } catch (SQLException e){
             respuesta.put("error", true);
             respuesta.put("mensaje", e.getMessage());

@@ -21,50 +21,48 @@ import utilidad.Utilidades;
 
 public class FXMLInicioSesionController implements Initializable {
     @FXML
-    private TextField tfNumPersonal;
+    private TextField textFieldNumeroPersonal;
     @FXML
-    private TextField pfPassword;
+    private TextField passwordFieldContrasenia;
     
     @FXML
-    private Label lbErrorNumPersonal;
+    private Label labelErrorNumeroPersonal;
     @FXML
-    private Label lbErrorPassword;
+    private Label labelErrorContrasenia;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        //TODO
-    }
+    public void initialize(URL url, ResourceBundle rb) {    }
 
     @FXML
-    private void clicIngresar(ActionEvent event) {
-        String noPersonal = tfNumPersonal.getText();
-        String password = pfPassword.getText();
+    private void clicButtonIngresar(ActionEvent event) {
+        String numeroPersonal = textFieldNumeroPersonal.getText();
+        String contrasenia = passwordFieldContrasenia.getText();
         
-        if(sonDatosValidos(noPersonal, password)) {
-            validarSesion(noPersonal, password);
+        if(sonDatosValidos(numeroPersonal, contrasenia)) {
+            validarSesion(numeroPersonal, contrasenia);
         }
     }
     
-    private boolean sonDatosValidos(String noPersonal, String password) {
+    private boolean sonDatosValidos(String numeroPersonal, String password) {
         boolean correcto = true;
-        lbErrorNumPersonal.setText("");
-        lbErrorPassword.setText("");
+        labelErrorNumeroPersonal.setText("");
+        labelErrorContrasenia.setText("");
         
-        if(noPersonal == null || noPersonal.isEmpty()) {
+        if(numeroPersonal == null || numeroPersonal.isEmpty()) {
             correcto = false;
-            lbErrorNumPersonal.setText("Numero de personal obligatorio");
+            labelErrorNumeroPersonal.setText("Numero de personal obligatorio");
         }
         
         if(password == null || password.isEmpty()) {
             correcto = false;
-            lbErrorPassword.setText("Contraseña obligatoria");
+            labelErrorContrasenia.setText("Contraseña obligatoria");
         }
         
         return correcto;
     }
     
-    private void validarSesion(String noPersonal, String password) {
-        HashMap<String,Object> respuesta = AutenticacionImplementacion.verificarSesionProfesor(noPersonal, password);
+    private void validarSesion(String numeroPersonal, String contrasenia) {
+        HashMap<String,Object> respuesta = AutenticacionImplementacion.verificarSesionProfesor(numeroPersonal, contrasenia);
         boolean error = (boolean) respuesta.get("error");
         
         if(!error) {
@@ -85,7 +83,7 @@ public class FXMLInicioSesionController implements Initializable {
             FXMLPrincipalController controlador = cargador.getController();
             controlador.obtenerSesion(profesorSesion);
             Scene escena = new Scene(vista);
-            Stage escenario = (Stage) tfNumPersonal.getScene().getWindow();
+            Stage escenario = (Stage) textFieldNumeroPersonal.getScene().getWindow();
             escenario.setScene(escena);
             escenario.setTitle("Inicio");
             escenario.show();

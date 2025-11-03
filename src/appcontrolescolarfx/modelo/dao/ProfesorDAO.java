@@ -7,53 +7,53 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProfesorDAO {
-    public static ResultSet obtenerProfesores(Connection conexionBD) throws SQLException {
-        if(conexionBD != null){  
+    public static ResultSet obtenerProfesores(Connection conexionBaseDatos) throws SQLException {
+        if(conexionBaseDatos != null){  
             String consulta = "SELECT idProfesor, nombre, apellidoPaterno, apellidoMaterno," +
-                    "noPersonal, fechaNacimiento, fechaContratacion, profesor.idRol, rol " +
+                    "numeroPersonal, fechaNacimiento, fechaContratacion, profesor.idRol, rol " +
                     "FROM profesor " +
                     "INNER JOIN rol ON rol.idRol = profesor.idRol;";
-            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            PreparedStatement sentencia = conexionBaseDatos.prepareStatement(consulta);
             return sentencia.executeQuery();
               
         }
 
-      throw new SQLException("No hay conexion a la base de datos."); 
+      throw new SQLException("No hay conexión a la base de datos."); 
     }
     
-    public static int registrarProfesor(Profesor profesor, Connection conexionBD) throws SQLException {
-        if(conexionBD != null) {
+    public static int registrarProfesor(Profesor profesor, Connection conexionBaseDatos) throws SQLException {
+        if(conexionBaseDatos != null) {
             String insercion = "INSERT INTO profesor (idRol, nombre, apellidoPaterno, apellidoMaterno, " +
-                    "noPersonal, password, fechaNacimiento, fechaContratacion) " +
+                    "numeroPersonal, contrasenia, fechaNacimiento, fechaContratacion) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-            PreparedStatement sentencia =  conexionBD.prepareStatement(insercion);
+            PreparedStatement sentencia =  conexionBaseDatos.prepareStatement(insercion);
             sentencia.setInt(1, profesor.getIdRol());
             sentencia.setString(2, profesor.getNombre());
             sentencia.setString(3, profesor.getApellidoPaterno());
             sentencia.setString(4, profesor.getApellidoMaterno());
-            sentencia.setString(5, profesor.getNoPersonal());
-            sentencia.setString(6, profesor.getPassword());
+            sentencia.setString(5, profesor.getNumeroPersonal());
+            sentencia.setString(6, profesor.getContrasenia());
             sentencia.setString(7, profesor.getFechaNacimiento());
             sentencia.setString(8, profesor.getFechaContratacion());
             return sentencia.executeUpdate();
         }
         
-        throw new SQLException("No hay conexion a la base de datos");
+        throw new SQLException("No hay conexión a la base de datos");
     }
 
-    public static int editarProfesor(Profesor profesor, Connection conexionBD) throws SQLException {
-        if(conexionBD != null) {
+    public static int editarProfesor(Profesor profesor, Connection conexionBaseDatos) throws SQLException {
+        if(conexionBaseDatos != null) {
             return 0;
         }
 
-        throw new SQLException("No hay conexion a la base de datos.");
+        throw new SQLException("No hay conexión a la base de datos.");
     }
 
-    public static int eliminarProfesor(int idProfesor, Connection conexionBD) throws SQLException {
-        if(conexionBD != null) {
+    public static int eliminarProfesor(int idProfesor, Connection conexionBaseDatos) throws SQLException {
+        if(conexionBaseDatos != null) {
             return 0;
         }
 
-        throw new SQLException("No hay conexion a la base de datos.");
+        throw new SQLException("No hay conexión a la base de datos.");
     }
 }

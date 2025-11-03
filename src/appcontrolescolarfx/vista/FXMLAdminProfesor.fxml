@@ -6,21 +6,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appcontrolescolarfx.controlador.FXMLAdminProfesorController">
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appcontrolescolarfx.controlador.FXMLAdministrarProfesorController">
    <children>
       <Pane prefHeight="50.0" prefWidth="919.0" style="-fx-background-color: black;" />
-      <TextField fx:id="tfBuscar" layoutX="35.0" layoutY="80.0" prefHeight="31.0" prefWidth="492.0" promptText="Buscar Profesor" />
-      <Button layoutX="601.0" layoutY="80.0" mnemonicParsing="false" onAction="#clicBtnRegistrar" text="Registrar" />
-      <Button layoutX="704.0" layoutY="80.0" mnemonicParsing="false" onAction="#clicBtnModificar" text="Modificar" />
-      <Button layoutX="808.0" layoutY="80.0" mnemonicParsing="false" onAction="#clicBtnEliminar" text="Eliminar" />
-      <TableView fx:id="tvProfesores" layoutX="31.0" layoutY="130.0" prefHeight="400.0" prefWidth="850.0">
+      <TextField fx:id="textFieldBuscar" layoutX="35.0" layoutY="80.0" prefHeight="31.0" prefWidth="492.0" promptText="Buscar Profesor" />
+      <Button layoutX="601.0" layoutY="80.0" mnemonicParsing="false" onAction="#clicButtonRegistrar" text="Registrar" />
+      <Button layoutX="704.0" layoutY="80.0" mnemonicParsing="false" onAction="#clicButtonModificar" text="Modificar" />
+      <Button layoutX="808.0" layoutY="80.0" mnemonicParsing="false" onAction="#clicButtonEliminar" text="Eliminar" />
+      <TableView fx:id="tableViewProfesores" layoutX="31.0" layoutY="130.0" prefHeight="400.0" prefWidth="850.0">
         <columns>
-          <TableColumn fx:id="colNumPersonal" prefWidth="120.0" text="No. de personal" />
-          <TableColumn fx:id="colApellidoPaterno" prefWidth="127.0" text="Apellido paterno" />
-            <TableColumn fx:id="colApellidoMaterno" prefWidth="135.0" text="Apellido materno" />
-            <TableColumn fx:id="colNombre" prefWidth="114.0" text="Nombre" />
-            <TableColumn fx:id="colFechaContratacion" prefWidth="141.0" text="Fecha contratación" />
-            <TableColumn fx:id="colRol" prefWidth="212.0" text="Rol" />
+          <TableColumn fx:id="columnNumPersonal" prefWidth="120.0" text="Numero de personal" />
+          <TableColumn fx:id="columnApellidoPaterno" prefWidth="127.0" text="Apellido paterno" />
+            <TableColumn fx:id="columnApellidoMaterno" prefWidth="135.0" text="Apellido materno" />
+            <TableColumn fx:id="columnNombre" prefWidth="114.0" text="Nombre" />
+            <TableColumn fx:id="columnFechaContratacion" prefWidth="141.0" text="Fecha contratación" />
+            <TableColumn fx:id="columnRol" prefWidth="212.0" text="Rol" />
         </columns>
       </TableView>
    </children>

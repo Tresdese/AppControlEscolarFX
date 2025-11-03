@@ -23,27 +23,26 @@ import javafx.stage.Stage;
 import utilidad.Utilidades;
 
 public class FXMLFormularioProfesorController implements Initializable {
-
     @FXML
-    private TextField tfNumPersonal;
+    private TextField textFieldNumeroPersonal;
     @FXML
-    private TextField tfNombre;
+    private TextField textFieldNombre;
     @FXML
-    private TextField tfApellidoPaterno;
+    private TextField textFieldApellidoPaterno;
     @FXML
-    private TextField tfApellidoMaterno;
+    private TextField textFieldApellidoMaterno;
     @FXML
-    private TextField tfPassword; //pfPassword
+    private TextField textFielContrasenia; //pfPassword
     
     @FXML
-    private DatePicker dpFechaNacimiento;
+    private DatePicker datePickerFechaNacimiento;
     @FXML
-    private DatePicker dpFechaContratacion;
+    private DatePicker datePickerFechaContratacion;
 
     @FXML
-    private ComboBox<Rol> cbRol;
+    private ComboBox<Rol> comboBoxRol;
     
-    private ObservableList<Rol> roles;
+    private ObservableList<Rol> observableListRoles;
     private IObservador observador;
     private Profesor profesorEdicion;
     
@@ -57,24 +56,23 @@ public class FXMLFormularioProfesorController implements Initializable {
         this.profesorEdicion = profesor;
 
         if(profesor != null) {
-            tfNombre.setText(profesor.getNombre());
-            tfApellidoPaterno.setText(profesor.getApellidoPaterno());
-            tfApellidoMaterno.setText(profesor.getApellidoMaterno());
-            tfPassword.setText(profesor.getPassword());
-            tfNumPersonal.setText(profesor.getNoPersonal());
-            tfNumPersonal.setEditable(false);
-            tfNumPersonal.setDisable(true);
-            dpFechaNacimiento.setValue(LocalDate.parse(profesor.getFechaNacimiento()));
-            dpFechaContratacion.setValue(LocalDate.parse(profesor.getFechaContratacion()));
-
+            textFieldNombre.setText(profesor.getNombre());
+            textFieldApellidoPaterno.setText(profesor.getApellidoPaterno());
+            textFieldApellidoMaterno.setText(profesor.getApellidoMaterno());
+            textFielContrasenia.setText(profesor.getContrasenia());
+            textFieldNumeroPersonal.setText(profesor.getNumeroPersonal());
+            textFieldNumeroPersonal.setEditable(false);
+            textFieldNumeroPersonal.setDisable(true);
+            datePickerFechaNacimiento.setValue(LocalDate.parse(profesor.getFechaNacimiento()));
+            datePickerFechaContratacion.setValue(LocalDate.parse(profesor.getFechaContratacion()));
             int posicion = obtenerRolSeleccionado(profesor.getIdRol());
-            cbRol.getSelectionModel().select(posicion);
+            comboBoxRol.getSelectionModel().select(posicion);
         }
     }
 
     private int obtenerRolSeleccionado(int idRol) {
-        for(int i = 0; i < roles.size(); i++) {
-            if(roles.get(i).getIdRol() == idRol) {
+        for(int i = 0; i < observableListRoles.size(); i++) {
+            if(observableListRoles.get(i).getIdRol() == idRol) {
                 return i;
             }
         }
@@ -83,7 +81,7 @@ public class FXMLFormularioProfesorController implements Initializable {
     }
 
     @FXML
-    private void clicBtnGuardar(ActionEvent event) {
+    private void clicButtonGuardar(ActionEvent event) {
         if(sonCamposValidos()) {
             if(profesorEdicion == null) {
                 registrarProfesor();
@@ -94,7 +92,7 @@ public class FXMLFormularioProfesorController implements Initializable {
     }
 
     @FXML
-    private void clicBtnCancelar(ActionEvent event) {
+    private void clicButtonCancelar(ActionEvent event) {
         cerrarVentana();
     }
     
@@ -102,10 +100,10 @@ public class FXMLFormularioProfesorController implements Initializable {
         HashMap<String,Object> respuesta = CatalogoImplementacion.obtenerRolesProfesor();
         
         if(!(boolean) respuesta.get("error")) {
-            List<Rol> rolesBD = (List<Rol>) respuesta.get("roles");
-            roles = FXCollections.observableArrayList();
-            roles.addAll(rolesBD);
-            cbRol.setItems(roles);
+            List<Rol> rolesBaseDatos = (List<Rol>) respuesta.get("roles");
+            observableListRoles = FXCollections.observableArrayList();
+            observableListRoles.addAll(rolesBaseDatos);
+            comboBoxRol.setItems(observableListRoles);
         } else {
             Utilidades.mostrarAlertaSimple("Error al cargar roles del sistema", respuesta.get("mensaje").toString(), Alert.AlertType.ERROR);
         }
@@ -115,42 +113,42 @@ public class FXMLFormularioProfesorController implements Initializable {
         boolean valido = true;
         String mensajeError = "Se encontraron los siguientes errores:\n";
         
-        if(tfNombre.getText().isEmpty()) {
+        if(textFieldNombre.getText().isEmpty()) {
             valido = false;
             mensajeError += "- Nombre del profesor requerido. \n";
         }
         
-        if(tfApellidoPaterno.getText().isEmpty()) {
+        if(textFieldApellidoPaterno.getText().isEmpty()) {
             valido = false;
             mensajeError += "- Apellido paterno del profesor requerido. \n";
         }
         
-        if(tfApellidoMaterno.getText().isEmpty()) {
+        if(textFieldApellidoMaterno.getText().isEmpty()) {
             valido = false;
             mensajeError += "- Apellido materno del profesor requerido. \n";
         }
         
-        if(tfNumPersonal.getText().isEmpty()) {
+        if(textFieldNumeroPersonal.getText().isEmpty()) {
             valido = false;
             mensajeError += "- Numero de personal requerido. \n";
         }
         
-        if(tfPassword.getText().isEmpty()) {
+        if(textFielContrasenia.getText().isEmpty()) {
             valido = false;
             mensajeError += "- Contraseña requerido. \n";
         }
         
-        if(dpFechaNacimiento.getValue() == null) {
+        if(datePickerFechaNacimiento.getValue() == null) {
             valido = false;
             mensajeError += "- Fecha de nacimiento del profesor requerida. \n";
         }
         
-        if(dpFechaContratacion.getValue() == null) {
+        if(datePickerFechaContratacion.getValue() == null) {
             valido = false;
             mensajeError += "- Fecha de contratación del profesor requerida. \n";
         }
         
-        if(cbRol.getSelectionModel().isEmpty()) {
+        if(comboBoxRol.getSelectionModel().isEmpty()) {
             valido = false;
             mensajeError += "- Selecciona un rol de sistema para el profesor.";
         }
@@ -177,15 +175,16 @@ public class FXMLFormularioProfesorController implements Initializable {
     
     private Profesor obtenerProfesores() {
         Profesor profesor = new Profesor();
-        Rol rolSeleccionado = cbRol.getSelectionModel().getSelectedItem();
+        
+        profesor.setNombre(textFieldNombre.getText());
+        profesor.setApellidoPaterno(textFieldApellidoPaterno.getText());
+        profesor.setApellidoMaterno(textFieldApellidoMaterno.getText());
+        profesor.setNumeroPersonal(textFieldNumeroPersonal.getText());
+        profesor.setContrasenia(textFielContrasenia.getText());
+        profesor.setFechaNacimiento(datePickerFechaNacimiento.getValue().toString());
+        profesor.setFechaContratacion(datePickerFechaContratacion.getValue().toString());
+        Rol rolSeleccionado = comboBoxRol.getSelectionModel().getSelectedItem();
         profesor.setIdRol(rolSeleccionado.getIdRol());
-        profesor.setNombre(tfNombre.getText());
-        profesor.setApellidoPaterno(tfApellidoPaterno.getText());
-        profesor.setApellidoMaterno(tfApellidoMaterno.getText());
-        profesor.setNoPersonal(tfNumPersonal.getText());
-        profesor.setPassword(tfPassword.getText());
-        profesor.setFechaNacimiento(dpFechaNacimiento.getValue().toString());
-        profesor.setFechaContratacion(dpFechaContratacion.getValue().toString());
         
         return profesor;
     }
@@ -196,7 +195,7 @@ public class FXMLFormularioProfesorController implements Initializable {
         HashMap<String,Object> resultado = ProfesorImplementacion.editarProfesor(profesorEdicion);
 
         if(!(boolean) resultado.get("error")) {
-            Utilidades.mostrarAlertaSimple("Profesor registrado correctamente", resultado.get("mensaje").toString(), Alert.AlertType.INFORMATION);
+            Utilidades.mostrarAlertaSimple("Profesor editado correctamente", resultado.get("mensaje").toString(), Alert.AlertType.INFORMATION);
             observador.notificarOperacionExitosa("editar", profesorEdicion.getNombre());
             cerrarVentana();
         } else {
@@ -205,6 +204,6 @@ public class FXMLFormularioProfesorController implements Initializable {
     }
     
     private void cerrarVentana() {
-        ((Stage) tfNombre.getScene().getWindow()).close();
+        ((Stage) textFieldNombre.getScene().getWindow()).close();
     }
 }

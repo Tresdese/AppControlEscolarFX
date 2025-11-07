@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,6 +26,8 @@ public class FXMLPrincipalController implements Initializable {
     
     @FXML
     private Label labelNumeroPersonal;
+    @FXML
+    private Button adminAlumnosButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -56,13 +59,33 @@ public class FXMLPrincipalController implements Initializable {
     private void clicButtonCerrarSesion(ActionEvent event) {
         try {
             Parent vista = FXMLLoader.load(AppControlEscolarFX.class.getResource("vista/FXMLInicioSesion.fxml"));
+
             Scene escena = new Scene(vista);
             Stage escenarioPrincipal = (Stage) labelNombre.getScene().getWindow();
+            
             escenarioPrincipal.setScene(escena);
             escenarioPrincipal.setTitle("Iniciar sesión");
-            escenarioPrincipal.show();
+            escenarioPrincipal.showAndWait();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleAdminAlumnosButton(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(AppControlEscolarFX.class.getResource("vista/FXMLAdminAlumno.fxml"));
+            Parent vista = loader.load();
+            
+            Scene escenaAdministrarAlumno = new Scene(vista);
+            Stage escenarioAdministrarAlumno = new Stage();
+            
+            escenarioAdministrarAlumno.setScene(escenaAdministrarAlumno);
+            escenarioAdministrarAlumno.setTitle("Administrar Alumnos");
+            escenarioAdministrarAlumno.initModality(Modality.APPLICATION_MODAL);
+            escenarioAdministrarAlumno.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     

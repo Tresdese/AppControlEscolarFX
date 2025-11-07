@@ -1,4 +1,4 @@
-package appcontrolescolarfx.vista;
+package appcontrolescolarfx.controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;

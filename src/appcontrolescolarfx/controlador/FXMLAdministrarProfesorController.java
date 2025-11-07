@@ -8,8 +8,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -69,6 +73,8 @@ public class FXMLAdministrarProfesorController implements Initializable, IObserv
             observableListProfesores = FXCollections.observableArrayList();
             observableListProfesores.addAll(profesoresBaseDatos);
             tableViewProfesores.setItems(observableListProfesores);
+            cargarInformacion();
+            configurarBusqueda();
         } else {
             Utilidades.mostrarAlertaSimple("Error", " " + respuesta.get("mensaje"), Alert.AlertType.ERROR);
         }
@@ -136,5 +142,37 @@ public class FXMLAdministrarProfesorController implements Initializable, IObserv
         System.out.println("Operación: " + tipoOperacion);
         System.out.println("Nombre: " + nombre);
         cargarInformacion();
+    }
+    
+    public void configurarBusqueda() {
+        if(observableListProfesores != null && observableListProfesores.size() > 0) {
+            FilteredList<Profesor> filtradoProfesores = new FilteredList<>(observableListProfesores, p->true);
+            textFieldBuscar.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    filtradoProfesores.setPredicate(profesor -> {
+                        // CASO DEFAULT VACIO DEVOLVER TODOS
+                        if(newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
+                        
+                        String lowerNewValue = newValue.toLowerCase();
+                        // Criterio 1 de búsque por nombre
+                        if(profesor.getNombre().toLowerCase().contains(lowerNewValue)) {
+                            return true;
+                        }
+                        // Criterio 2 de búsqueda por número de personal
+                        if(profesor.getNumeroPersonal().toLowerCase().contains(lowerNewValue)) {
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+            });
+            
+            SortedList<Profesor> sortedProfesor = new SortedList<>(filtradoProfesores);
+            sortedProfesor.comparatorProperty().bind(tableViewProfesores.comparatorProperty());
+            tableViewProfesores.setItems(sortedProfesor);
+        }
     }
 }

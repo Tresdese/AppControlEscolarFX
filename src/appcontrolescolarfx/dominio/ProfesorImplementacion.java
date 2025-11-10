@@ -10,12 +10,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class ProfesorImplementacion {
-    public static HashMap<String,Object> obtenerProfesores(){
+    public static HashMap<String,Object> obtenerProfesores() {
         HashMap<String,Object> respuesta = new LinkedHashMap<>();
         
-        try{
+        try {
             ResultSet resultado = ProfesorDAO.obtenerProfesores(ConexionBaseDatos.abrirConexionBD());
             ArrayList<Profesor> profesoresBaseDatos = new ArrayList<>();
+            
             while (resultado.next()){
                 Profesor profesor = new Profesor();
                 profesor.setIdProfesor(resultado.getInt("idProfesor"));
@@ -35,7 +36,7 @@ public class ProfesorImplementacion {
             respuesta.put("profesores", profesoresBaseDatos);
             
             ConexionBaseDatos.cerrarConexionBD();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             respuesta.put("error", true);
             respuesta.put("mensaje", e.getMessage());
         }
@@ -76,7 +77,7 @@ public class ProfesorImplementacion {
                 respuesta.put("mensaje", "El registro del profesor(a) " + profesor.getNombre() + " fue editada correctamente.");
             } else {
                 respuesta.put("error", true);
-                respuesta.put("mensaje", "Lo sentimos :( no se pudo editar la información del profesfor, por favor intente más tarde.");
+                respuesta.put("mensaje", "Lo sentimos :( no se pudo editar la información del profesor, por favor intente más tarde.");
             }
 
             ConexionBaseDatos.cerrarConexionBD();

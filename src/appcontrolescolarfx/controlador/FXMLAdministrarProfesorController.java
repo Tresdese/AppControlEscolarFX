@@ -68,12 +68,12 @@ public class FXMLAdministrarProfesorController implements Initializable, IObserv
     private void cargarInformacion() {
         HashMap<String,Object> respuesta = ProfesorImplementacion.obtenerProfesores();
         boolean error = (boolean) respuesta.get("error");
+        
         if(!error) {
             ArrayList<Profesor> profesoresBaseDatos = (ArrayList<Profesor>) respuesta.get("profesores");
             observableListProfesores = FXCollections.observableArrayList();
             observableListProfesores.addAll(profesoresBaseDatos);
             tableViewProfesores.setItems(observableListProfesores);
-            cargarInformacion();
             configurarBusqueda();
         } else {
             Utilidades.mostrarAlertaSimple("Error", " " + respuesta.get("mensaje"), Alert.AlertType.ERROR);

@@ -53,7 +53,7 @@ public class AlumnoImplementacion {
             int filasAfectadas = AlumnoDAO.registrarAlumno(alumno, ConexionBaseDatos.abrirConexionBD());
             if(filasAfectadas > 0) {
                 respuesta.put("error", false);
-                respuesta.put("mensaje", "El registro del profesor(a) " + alumno.getNombre() + " fue guardado correctamente.");
+                respuesta.put("mensaje", "El registro del alumno(a) " + alumno.getNombre() + " fue guardado correctamente.");
             } else {
                 respuesta.put("error", true);
                 respuesta.put("mensaje", "Lo sentimos :( no se pudo guardar la informacion del alumno, por favor intentelo mas tarde.");

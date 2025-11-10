@@ -23,7 +23,7 @@
       <Label layoutX="257.0" layoutY="295.0" text="Correo electrónico" />
       <TextField fx:id="textFieldCorreo" layoutX="257.0" layoutY="316.0" promptText="tucorrero@dominio" />
       <Label layoutX="494.0" layoutY="295.0" text="Fecha de nacimiento" />
-      <DatePicker fx:id="textFieldFechaNacimiento" layoutX="492.0" layoutY="316.0" prefHeight="31.0" prefWidth="187.0" promptText="dd/mm/aaaa" />
+      <DatePicker fx:id="datePickerFechaNacimiento" layoutX="492.0" layoutY="316.0" prefHeight="31.0" prefWidth="187.0" promptText="dd/mm/aaaa" />
       <Label layoutX="31.0" layoutY="376.0" text="Facultad" />
       <ComboBox fx:id="comboBoxFacultad" layoutX="31.0" layoutY="397.0" prefHeight="31.0" prefWidth="187.0" promptText="Selecciona Facultad" />
       <Label layoutX="257.0" layoutY="376.0" text="Carrera" />

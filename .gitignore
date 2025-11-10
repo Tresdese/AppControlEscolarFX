@@ -3,6 +3,7 @@
 /dist
 /nbproject
 *.jar
+.vscode/
 
 # Archivo de secretos
 config.properties

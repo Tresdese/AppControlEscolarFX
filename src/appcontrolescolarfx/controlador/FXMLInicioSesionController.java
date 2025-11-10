@@ -71,13 +71,11 @@ public class FXMLInicioSesionController implements Initializable {
         boolean error = (boolean) respuesta.get("error");
         
         if(!error) {
-            System.out.println(error + "Se inicio sesion");
             Profesor profesorSesion = (Profesor) respuesta.get("profesor");
             Utilidades.mostrarAlertaSimple("Credenciales correctas", "Bienvenido(a) profesor(a) " + profesorSesion.getNombre() + 
                     ", al sistema de administración escolar", Alert.AlertType.INFORMATION);
             irPantallaPrincipal(profesorSesion);
         } else {
-            System.out.println(error + " No se inicio sesion");
             Utilidades.mostrarAlertaSimple("Credenciales incorrectas", 
                     "No. de personal y/o contraseña incorrectos, por favor verifica la información", Alert.AlertType.ERROR);
         }

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appcontrolescolarfx.controlador.FXMLPrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appcontrolescolarfx.controlador.FXMLPrincipalController">
    <children>
       <Label layoutX="40.0" layoutY="68.0" text="Bienvenido(a)" />
       <Label fx:id="labelNombre" layoutX="40.0" layoutY="98.0" text="(Nombre)" />
       <Label fx:id="labelNumeroPersonal" layoutX="40.0" layoutY="130.0" text="(NumeroPersonal)" />
       <Button layoutX="330.0" layoutY="104.0" mnemonicParsing="false" onAction="#clicIrAdministrarProfesor" text="Administración de profesores" />
-      <Button fx:id="adminAlumnosButton" layoutX="330.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleAdminAlumnosButton" text="Administración de alumnos" />
+      <Button layoutX="330.0" layoutY="158.0" mnemonicParsing="false" onAction="#clicIrAdministrarAlumno" text="Administración de alumnos" />
       <Button layoutX="330.0" layoutY="207.0" mnemonicParsing="false" text="Administración de carreras" />
       <Button layoutX="330.0" layoutY="257.0" mnemonicParsing="false" onAction="#clicButtonCerrarSesion" text="Cerrar sesión" />
       <Pane layoutX="-1.0" prefHeight="50.0" prefWidth="603.0" style="-fx-background-color: #43B6E9;">

@@ -37,4 +37,9 @@ public class Carrera {
     public String getCarrera() {
         return carrera;
     }
+
+    @Override
+    public String toString() {
+        return carrera;
+    }
 }

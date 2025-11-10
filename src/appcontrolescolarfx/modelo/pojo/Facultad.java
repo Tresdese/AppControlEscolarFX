@@ -27,4 +27,9 @@ public class Facultad {
     public String getFacultad() {
         return facultad;
     }
+
+    @Override
+    public String toString() {
+        return facultad;
+    }
 }

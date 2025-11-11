@@ -10,55 +10,107 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class AlumnoImplementacion {
-    public static HashMap<String,Object> obtenerAlumnos(){
+    public static HashMap<String,Object> obtenerAlumnos() {
         HashMap<String,Object> respuesta = new LinkedHashMap<>();
-
-        try{
+        
+        try {
             ResultSet resultado = AlumnoDAO.obtenerAlumnos(ConexionBaseDatos.abrirConexionBD());
-
             ArrayList<Alumno> alumnosBaseDatos = new ArrayList<>();
-            while(resultado.next()){
+            
+            while(resultado.next()) {
                 Alumno alumno = new Alumno();
                 alumno.setIdAlumno(resultado.getInt("idAlumno"));
                 alumno.setNombre(resultado.getString("nombre"));
                 alumno.setApellidoPaterno(resultado.getString("apellidoPaterno"));
                 alumno.setApellidoMaterno(resultado.getString("apellidoMaterno"));
-                alumno.setMatricula(resultado.getString("matricula"));
                 alumno.setFechaNacimiento(resultado.getString("fechaNacimiento"));
-                try {
-                    alumno.setIdCarrera(resultado.getInt("idCarrera"));
-                } catch (Exception ex) {
-                    // dejar idCarrera por defecto si no existe
-                }
-                // Solo leer la columna 'carrera' si está presente en el ResultSet
-                try {
-                    java.sql.ResultSetMetaData md = resultado.getMetaData();
-                    boolean tieneCarrera = false;
-                    for (int i = 1; i <= md.getColumnCount(); i++) {
-                        if ("carrera".equalsIgnoreCase(md.getColumnName(i))) {
-                            tieneCarrera = true;
-                            break;
-                        }
-                    }
-                    if (tieneCarrera) {
-                        alumno.setCarrera(resultado.getString("carrera"));
-                    }
-                } catch (Exception ex) {
-                    // ignorar y no establecer carrera
-                }
-
+                alumno.setMatricula(resultado.getString("matricula"));
+                alumno.setCorreo(resultado.getString("correo"));
+                alumno.setIdCarrera(resultado.getInt("idCarrera"));
+                alumno.setCarrera(resultado.getString("carrera"));
+                alumno.setIdFacultad(resultado.getInt("idFacultad"));
+                alumno.setFacultad(resultado.getString("facultad"));
+                
                 alumnosBaseDatos.add(alumno);
             }
-
+            
             respuesta.put("error", false);
             respuesta.put("alumnos", alumnosBaseDatos);
+            
+            ConexionBaseDatos.cerrarConexionBD();
+        } catch(SQLException e) {
+            respuesta.put("error", true);
+            respuesta.put("mensaje", e.getMessage());
+        }
+        
+        return respuesta;
+    }
+    
+    public static HashMap<String, Object> registrarAlumno(Alumno alumno) {
+        HashMap<String,Object> respuesta = new LinkedHashMap<>();
+        
+        try {
+            int filasAfectadas = AlumnoDAO.registrarAlumno(alumno, ConexionBaseDatos.abrirConexionBD());
+            if(filasAfectadas > 0) {
+                respuesta.put("error", false);
+                respuesta.put("mensaje", "El registro del alumno(a) " + alumno.getNombre() + " fue guardado correctamente.");
+            } else {
+                respuesta.put("error", true);
+                respuesta.put("mensaje", "Lo sentimos :( no se pudo guardar la informacion del alumno, por favor intentelo mas tarde.");
+            }
+            
+            ConexionBaseDatos.cerrarConexionBD();
+        } catch (SQLException e) {
+            respuesta.put("error", true);
+            respuesta.put("mensaje", e.getMessage());
+        }
+        
+        return respuesta;
+    }
+    
+    public static HashMap<String,Object> editarAlumno(Alumno alumno) {
+        HashMap<String,Object> respuesta = new LinkedHashMap<>();
+
+        try {
+            int filasAfectadas = AlumnoDAO.editarAlumno(alumno, ConexionBaseDatos.abrirConexionBD());
+
+            if(filasAfectadas > 0) {
+                respuesta.put("error", false);
+                respuesta.put("mensaje", "El registro del alumno(a) " + alumno.getNombre() + " fue editada correctamente.");
+            } else {
+                respuesta.put("error", true);
+                respuesta.put("mensaje", "Lo sentimos :( no se pudo editar la información del alumno, por favor intente más tarde.");
+            }
 
             ConexionBaseDatos.cerrarConexionBD();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             respuesta.put("error", true);
             respuesta.put("mensaje", e.getMessage());
         }
 
+        return respuesta;
+    }
+    
+    public static HashMap<String,Object> eliminarAlumno(int idAlumno) {
+        HashMap<String,Object> respuesta = new LinkedHashMap<>();
+        
+        try {
+            int filasAfectadas = AlumnoDAO.eliminarAlumno(idAlumno, ConexionBaseDatos.abrirConexionBD());
+            
+            if(filasAfectadas > 0) {
+                respuesta.put("error", false);
+                respuesta.put("mensaje", "El registro del alumno(a) fue eliminado correctamente.");
+            } else {
+                respuesta.put("error", true);
+                respuesta.put("mensaje", "Lo sentimos :( no se pudo eliminar la información del alumno, por favor inténtelo mas tarde.");
+            }
+            
+            ConexionBaseDatos.cerrarConexionBD();
+        } catch(SQLException e) {
+            respuesta.put("error", true);
+            respuesta.put("mensaje", e.getMessage());
+        }
+        
         return respuesta;
     }
 }

@@ -68,12 +68,12 @@ public class FXMLAdministrarProfesorController implements Initializable, IObserv
     private void cargarInformacion() {
         HashMap<String,Object> respuesta = ProfesorImplementacion.obtenerProfesores();
         boolean error = (boolean) respuesta.get("error");
+        
         if(!error) {
             ArrayList<Profesor> profesoresBaseDatos = (ArrayList<Profesor>) respuesta.get("profesores");
             observableListProfesores = FXCollections.observableArrayList();
             observableListProfesores.addAll(profesoresBaseDatos);
             tableViewProfesores.setItems(observableListProfesores);
-            cargarInformacion();
             configurarBusqueda();
         } else {
             Utilidades.mostrarAlertaSimple("Error", " " + respuesta.get("mensaje"), Alert.AlertType.ERROR);
@@ -151,14 +151,17 @@ public class FXMLAdministrarProfesorController implements Initializable, IObserv
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                     filtradoProfesores.setPredicate(profesor -> {
+                        // CASO DEFAULT VACIO DEVOLVER TODOS
                         if(newValue == null || newValue.isEmpty()) {
                             return true;
                         }
                         
                         String lowerNewValue = newValue.toLowerCase();
+                        // Criterio 1 de búsque por nombre
                         if(profesor.getNombre().toLowerCase().contains(lowerNewValue)) {
                             return true;
                         }
+                        // Criterio 2 de búsqueda por número de personal
                         if(profesor.getNumeroPersonal().toLowerCase().contains(lowerNewValue)) {
                             return true;
                         }

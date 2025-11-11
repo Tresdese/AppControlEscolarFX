@@ -6,11 +6,13 @@ import appcontrolescolarfx.interfaces.IObservador;
 import appcontrolescolarfx.modelo.pojo.Alumno;
 import appcontrolescolarfx.modelo.pojo.Carrera;
 import appcontrolescolarfx.modelo.pojo.Facultad;
+import appcontrolescolarfx.modelo.pojo.Respuesta;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +80,7 @@ public class FXMLFormularioAlumnoController implements Initializable {
     }
 
     @FXML
-    private void clicButtonGuardar(ActionEvent event) {
+    private void clicButtonGuardar(ActionEvent event) throws IOException {
         if(sonCamposValidos()) {
             if(alumnoEdicion == null) {
                 registrarAlumno();
@@ -138,7 +140,7 @@ public class FXMLFormularioAlumnoController implements Initializable {
     private void mostrarDialogo() {
         FileChooser dialogoSeleccion = new FileChooser();
         dialogoSeleccion.setTitle("Selecciona una foto");
-        FileChooser.ExtensionFilter filtroImagen = new FileChooser.ExtensionFilter("Archivos JPG (.jpg)", "*.jpg");
+        FileChooser.ExtensionFilter filtroImagen = new FileChooser.ExtensionFilter("Archivos de imagen (.jpg, .png)", "*.jpg", "*.png");
         dialogoSeleccion.getExtensionFilters().add(filtroImagen);
         File archivoTemporal = dialogoSeleccion.showOpenDialog(textFieldNombre.getScene().getWindow());
         
@@ -222,20 +224,7 @@ public class FXMLFormularioAlumnoController implements Initializable {
         return valido;
     }
     
-    private void registrarAlumno() {
-        Alumno alumnoNuevo = obtenerAlumnos(); 
-        HashMap<String,Object> resultado = AlumnoImplementacion.registrarAlumno(alumnoNuevo);
-        
-        if(!(boolean) resultado.get("error")) {
-            Utilidades.mostrarAlertaSimple("Alumno registrado", resultado.get("mensaje").toString(), Alert.AlertType.INFORMATION);
-            observador.notificarOperacionExitosa("registrar", alumnoNuevo.getNombre());
-            cerrarVentana();
-        } else {
-            Utilidades.mostrarAlertaSimple("Error al registrar", resultado.get("mensaje").toString(), Alert.AlertType.ERROR);
-        }
-    }
-    
-    private Alumno obtenerAlumnos() {
+    private Alumno obtenerAlumnos() throws IOException {
         Alumno alumno = new Alumno();
         
         alumno.setMatricula(textFieldMatricula.getText());
@@ -247,22 +236,28 @@ public class FXMLFormularioAlumnoController implements Initializable {
         Carrera carreraSeleccionada = comboBoxCarrera.getSelectionModel().getSelectedItem();
         alumno.setIdCarrera(carreraSeleccionada.getIdCarrera());
         
-        if (fotoSeleccionada != null) {
-            try {
-                byte[] fotoEnBytes = java.nio.file.Files.readAllBytes(fotoSeleccionada.toPath());
-                alumno.setFoto(fotoEnBytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-                Utilidades.mostrarAlertaSimple("Error al leer foto", "Hubo un error al procesar el archivo de la foto.", Alert.AlertType.ERROR);
-            }
-        } else if (alumnoEdicion != null) {
-            alumno.setFoto(alumnoEdicion.getFoto()); 
-        }
-        
+        byte[] fotoBytes = Files.readAllBytes(fotoSeleccionada.toPath());
+        alumno.setFoto(fotoBytes);
         return alumno;
     }
     
-    private void editarAlumno() {
+    private void registrarAlumno() {
+        try {
+            Alumno alumnoNuevo = obtenerAlumnos();
+            Respuesta respuesta = AlumnoImplementacion.registrarAlumno(alumnoNuevo);
+            
+            if(!respuesta.isError()) {
+                Utilidades.mostrarAlertaSimple("Alumno registrado", respuesta.getMensaje(), Alert.AlertType.INFORMATION);
+                cerrarVentana();
+            } else {
+                Utilidades.mostrarAlertaSimple("Error al registrar", respuesta.getMensaje(), Alert.AlertType.ERROR);
+            }
+        } catch(IOException e) {
+            Utilidades.mostrarAlertaSimple("Error con archivo de imagen", "La foto seleccionada no puede ser guardada, por favor intenta con otra fotografía", Alert.AlertType.ERROR);
+        }
+    }
+    
+    private void editarAlumno() throws IOException {
         Alumno alumnoEdicion = obtenerAlumnos();
         alumnoEdicion.setIdAlumno(this.alumnoEdicion.getIdAlumno());
         HashMap<String,Object> resultado = AlumnoImplementacion.editarAlumno(alumnoEdicion);

@@ -1,21 +1,15 @@
 package appcontrolescolarfx.modelo.pojo;
 
 public class Carrera {
-    private int idFacultad;
     private int idCarrera;
     private String carrera;
 
     public Carrera() {
     }
 
-    public Carrera(int idFacultad, int idCarrera, String carrera) {
-        this.idFacultad = idFacultad;
+    public Carrera(int idCarrera, String carrera) {
         this.idCarrera = idCarrera;
         this.carrera = carrera;
-    }
-
-    public void setIdFacultad(int idFacultad) {
-        this.idFacultad = idFacultad;
     }
 
     public void setIdCarrera(int idCarrera) {
@@ -24,10 +18,6 @@ public class Carrera {
 
     public void setCarrera(String carrera) {
         this.carrera = carrera;
-    }
-
-    public int getIdFacultad() {
-        return idFacultad;
     }
 
     public int getIdCarrera() {

@@ -62,32 +62,6 @@ public class CatalogoImplementacion {
         
         return respuesta;
     }
-    
-    public static HashMap<String,Object> obtenerCarreras() {
-        HashMap<String,Object> respuesta = new LinkedHashMap<>();
-        
-        try {
-            ResultSet resultado = CatalogoDAO.obtenerCarreras(ConexionBaseDatos.abrirConexionBD());
-            List<Carrera> carrerasBaseDatos = new ArrayList<>();
-            
-            while(resultado.next()) {
-                Carrera carrera = new Carrera();
-                carrera.setIdCarrera(resultado.getInt("idCarrera"));
-                carrera.setCarrera(resultado.getString("carrera")); 
-                carrera.setIdFacultad(resultado.getInt("idFacultad")); 
-                carrerasBaseDatos.add(carrera);
-            }
-            
-            ConexionBaseDatos.cerrarConexionBD();
-            respuesta.put("error", false);
-            respuesta.put("carreras", carrerasBaseDatos); 
-        } catch (SQLException e){
-            respuesta.put("error", true);
-            respuesta.put("mensaje", e.getMessage());
-        }
-        
-        return respuesta;
-    }
 
     public static HashMap<String,Object> obtenerCarrerasPorFacultad(int idFacultad) {
         HashMap<String,Object> respuesta = new LinkedHashMap<>();
@@ -100,7 +74,6 @@ public class CatalogoImplementacion {
                 Carrera carrera = new Carrera();
                 carrera.setIdCarrera(resultado.getInt("idCarrera"));
                 carrera.setCarrera(resultado.getString("carrera"));
-                carrera.setIdFacultad(resultado.getInt("idFacultad"));
                 carrerasBaseDatos.add(carrera);
             }
             

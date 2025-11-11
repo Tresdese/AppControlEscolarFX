@@ -67,20 +67,9 @@ public class FXMLFormularioAlumnoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        configurarListenerFacultad();
         cargarFacultades();
-        comboBoxCarrera.setDisable(true);
-        comboBoxFacultad.valueProperty().addListener(new ChangeListener<Facultad>() {
-            @Override
-            public void changed(ObservableValue<? extends Facultad> observable, Facultad oldValue, Facultad newValue) {
-                if (newValue != null) {
-                    comboBoxCarrera.setDisable(false);
-                    cargarCarrerasPorFacultad(newValue.getIdFacultad());
-                } else {
-                    comboBoxCarrera.setDisable(true);
-                    comboBoxCarrera.setItems(null); 
-                }
-            }
-        });
+        
     }
 
     @FXML
@@ -102,6 +91,22 @@ public class FXMLFormularioAlumnoController implements Initializable {
     @FXML
     private void clicButtonCancelar(ActionEvent event) {
         cerrarVentana();
+    }
+    
+    private void configurarListenerFacultad() {
+        comboBoxCarrera.setDisable(true);
+        comboBoxFacultad.valueProperty().addListener(new ChangeListener<Facultad>() {
+            @Override
+            public void changed(ObservableValue<? extends Facultad> observable, Facultad oldValue, Facultad newValue) {
+                if (newValue != null) {
+                    comboBoxCarrera.setDisable(false);
+                    cargarCarrerasPorFacultad(newValue.getIdFacultad());
+                } else {
+                    comboBoxCarrera.setDisable(true);
+                    comboBoxCarrera.setItems(null); 
+                }
+            }
+        });
     }
     
     private void cargarFacultades() {

@@ -26,19 +26,9 @@ public class CatalogoDAO {
         throw new SQLException("No hay conexión a la base de datos");
     }
     
-    public static ResultSet obtenerCarreras(Connection conexionBD) throws SQLException {
-        if(conexionBD != null) {
-            String consulta = "SELECT * FROM carrera";
-            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
-            return sentencia.executeQuery();
-        }
-        
-        throw new SQLException("No hay conexión a la base de datos");
-    }
-    
     public static ResultSet obtenerCarrerasPorFacultad(Connection conexionBD, int idFacultad) throws SQLException {
         if(conexionBD != null) {
-            String consulta = "SELECT * FROM carrera WHERE idFacultad = ?";
+            String consulta = "SELECT idCarrera, carrera FROM carrera WHERE idFacultad = ?";
             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             sentencia.setInt(1, idFacultad);
             return sentencia.executeQuery();
